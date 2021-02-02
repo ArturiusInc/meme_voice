@@ -1,25 +1,56 @@
-import { StatusBar } from "expo-status-bar";
+import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Header from "./components/header";
-import VoiceList from "./components/voicelist";
+import { Button, TouchableOpacity } from "react-native";
+import styles from "./styles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import HomeScreen from "./screens/HomeScreen";
+import AddNewScreen from "./screens/AddNewScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createStackNavigator } from "@react-navigation/stack";
 
-export default function App() {
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+const screensHeaderOprions = {
+	headerStyle: {
+		backgroundColor: "#f4511e",
+	},
+	headerTintColor: "#fff",
+	headerTitleStyle: {
+		fontWeight: "bold",
+	},
+};
+
+const customHeaderElements = (nav) => ({
+	headerRight: () => (
+		<TouchableOpacity style={styles.menuButton} onPress={() => nav.openDrawer()}>
+			<FontAwesome5 name="bars" size={24} color="#fff" />
+		</TouchableOpacity>
+	),
+});
+
+const StackNavigator = ({ navigation }) => (
+	<Stack.Navigator screenOptions={screensHeaderOprions}>
+		<Stack.Screen name="Home" component={HomeScreen} options={customHeaderElements(navigation)} />
+		<Stack.Screen name="Addnew" component={AddNewScreen} options={customHeaderElements(navigation)} />
+	</Stack.Navigator>
+);
+
+const StackNavigatorAdd = ({ navigation }) => (
+	<Stack.Navigator /*initialRouteName="Home"*/ screenOptions={screensHeaderOprions}>
+		<Stack.Screen name="Addnew" component={AddNewScreen} options={customHeaderElements(navigation)} />
+		<Stack.Screen name="Home" component={HomeScreen} options={customHeaderElements(navigation)} />
+	</Stack.Navigator>
+);
+
+export default function App(props) {
 	return (
-		<View style={styles.container}>
-			<Header></Header>
-			<VoiceList></VoiceList>
-			<StatusBar style="auto" />
-		</View>
+		<NavigationContainer>
+			<Drawer.Navigator initialRouteName="HomeScreen" /*drawerContent={(props) => <DrawerContent {...props} />}*/>
+				<Drawer.Screen name="Home" component={StackNavigator} />
+				<Drawer.Screen name="Add new" component={StackNavigatorAdd} />
+			</Drawer.Navigator>
+		</NavigationContainer>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "flex-start",
-		paddingHorizontal: 10,
-	},
-});
