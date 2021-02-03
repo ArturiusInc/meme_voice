@@ -26,34 +26,26 @@ export default function AddNew({ navigation }) {
 		}
 	};
 
-	const addData = async (storeData) => {
+	const addDataStorage = async (storeData) => {
 		try {
-			//const jsonValue = JSON.stringify(value);
 			let newData = JSON.parse(storeData);
-			newData = newData.item_list.push(file.uri);
+			newData.item_list.push(file.uri);
 			newData = JSON.stringify(newData);
-			console.log("newData:", newData);
 			await AsyncStorage.setItem("item_list", newData);
-			//navigation.navigate("HomeScreen");
-			console.log(3);
 			navigation.navigate("Home");
-			console.log(4);
 		} catch (e) {
 			// saving error
 		}
 	};
-	const getData = async () => {
+	const getDataStorage = async () => {
 		try {
 			await AsyncStorage.removeItem("item_list");
 			const jsonValue = await AsyncStorage.getItem("item_list");
-			console.log("jsonValue:", jsonValue);
 			if (jsonValue != null) {
-				console.log(1);
 				addData(jsonValue);
 			} else {
 				const nullData = '{"item_list":[]}';
-				console.log(2);
-				addData(nullData);
+				addDataStorage(nullData);
 			}
 		} catch (e) {
 			// error reading value
@@ -63,7 +55,7 @@ export default function AddNew({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<Button onPress={pickDocument} title="Выбрать медаи файл"></Button>
-			<Button onPress={getData} title="Сохранить" />
+			<Button onPress={getDataStorage} title="Сохранить" />
 			<StatusBar style="auto" />
 		</View>
 	);
