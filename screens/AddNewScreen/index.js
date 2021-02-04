@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TextInput, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import * as DocumentPicker from "expo-document-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,18 +18,34 @@ Object {
 */
 export default function AddNew({ navigation }) {
 	const [file, setFile] = useState(null);
+	const [fileImg, setFileImg] = useState(null);
+	const [memeName, setMemeName] = useState(null);
+	const [linkOriginal, setLinkOriginal] = useState(null);
 
-	const pickDocument = async () => {
+	const pickAudio = async () => {
 		let result = await DocumentPicker.getDocumentAsync({ type: "audio/*" });
 		if (result.type === "success") {
 			setFile(result);
 		}
 	};
 
+	const pickImg = async () => {
+		let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
+		if (result.type === "success") {
+			setFileImg(result);
+		}
+	};
+
 	const addDataStorage = async (storeData) => {
 		try {
 			let newData = JSON.parse(storeData);
-			newData.item_list.push(file.uri);
+			const memObject = {
+				sound: file,
+				img: fileImg,
+				name: memeName,
+				link: linkOriginal,
+			};
+			newData.push(memObject);
 			newData = JSON.stringify(newData);
 			await AsyncStorage.setItem("item_list", newData);
 			navigation.navigate("Home");
@@ -42,9 +58,9 @@ export default function AddNew({ navigation }) {
 			await AsyncStorage.removeItem("item_list");
 			const jsonValue = await AsyncStorage.getItem("item_list");
 			if (jsonValue != null) {
-				addData(jsonValue);
+				addDataStorage(jsonValue);
 			} else {
-				const nullData = '{"item_list":[]}';
+				const nullData = "[]";
 				addDataStorage(nullData);
 			}
 		} catch (e) {
@@ -54,7 +70,27 @@ export default function AddNew({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Button onPress={pickDocument} title="Выбрать медаи файл"></Button>
+			<View style={styles.file}>
+				<Button onPress={pickAudio} title="Выбрать медаи файл" />
+				<Text style={styles.selectfiletext}>{file ? file.name : "не выбрано"}</Text>
+			</View>
+			<View style={styles.file}>
+				<Button onPress={pickImg} title="Выбрать иконку" />
+				{fileImg ? <Image source={{ uri: fileImg.uri }} style={styles.icon} /> : null}
+				<Text style={styles.selectfiletext}>{fileImg ? fileImg.name : "не выбрано"}</Text>
+			</View>
+			<TextInput
+				style={styles.memename}
+				value={memeName}
+				onChangeText={(text) => setMemeName(text)}
+				placeholder="Название мема"
+			/>
+			<TextInput
+				style={styles.memename}
+				value={linkOriginal}
+				onChangeText={(text) => setLinkOriginal(text)}
+				placeholder="Ссылка на оригинал"
+			/>
 			<Button onPress={getDataStorage} title="Сохранить" />
 			<StatusBar style="auto" />
 		</View>

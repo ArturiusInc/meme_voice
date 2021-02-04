@@ -5,7 +5,7 @@ import styles from "./styles";
 import { Audio } from "expo-av";
 
 export default function VoiceList() {
-	const [listUri, setListUri] = useState([]);
+	const [memObject, setmemObject] = useState([]);
 	const [sound, setSound] = useState();
 
 	async function playSound(uri) {
@@ -30,7 +30,7 @@ export default function VoiceList() {
 		try {
 			const jsonValue = await AsyncStorage.getItem("item_list");
 			if (jsonValue != null) {
-				setListUri(JSON.parse(jsonValue).item_list);
+				setmemObject(JSON.parse(jsonValue));
 			}
 		} catch (e) {
 			/*error reading value*/
@@ -39,8 +39,8 @@ export default function VoiceList() {
 
 	return (
 		<View style={styles.voicelist}>
-			{listUri.map((uri, index) => (
-				<Button key={uri} title={`${index + 1}`} onPress={() => playSound(uri)} />
+			{memObject.map((item) => (
+				<Button key={item.sound.uri} title={`${item.name}`} onPress={() => playSound(item.sound.uri)} />
 			))}
 		</View>
 	);
