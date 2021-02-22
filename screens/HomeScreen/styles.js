@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "flex-start",
-		paddingHorizontal: 10,
+		padding: 10,
 	},
 	stretch: {
 		width: 50,

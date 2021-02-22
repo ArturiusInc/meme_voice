@@ -1,9 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-	stretch: {
-		width: 50,
+	image: {
+		width: 150,
 		height: 200,
-		resizeMode: "stretch",
+	},
+	stretch: {
+		width: 500,
+		height: 500,
+		//resizeMode: "stretch",
 	},
 });

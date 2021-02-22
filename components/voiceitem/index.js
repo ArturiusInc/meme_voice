@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Button, Image, Text, View } from "react-native";
+import { Button, Image, TouchableOpacity, ImageBackground, Text, View } from "react-native";
 import { Audio } from "expo-av";
 import { styles } from "./styles";
 
 export default function VoiceItem({ item }) {
 	const [sound, setSound] = useState();
-	async function playSound(uri) {
-		const { sound } = await Audio.Sound.createAsync({ uri: uri }, { shouldPlay: true });
-		setSound(sound);
-		await sound.playAsync();
+	async function playSound(urii) {
+		try {
+			const { sound } = await Audio.Sound.createAsync({ uri: urii }, { shouldPlay: true });
+			setSound(sound);
+			await sound.playAsync();
+		} catch (error) {
+			console.log("error:", error);
+		}
 	}
 
 	useEffect(() => {
@@ -19,17 +23,19 @@ export default function VoiceItem({ item }) {
 			: undefined;
 	}, [sound]);
 	return (
-		<>
-			<Image
-				style={styles.stretch}
-				source={{
-					uri: item.img,
+		<TouchableOpacity
+			onPress={() => {
+				playSound(item.sound);
+			}}
+		>
+			<ImageBackground
+				style={{
+					height: 150,
+					width: 150,
 				}}
-				onPress={() => {
-					playSound(item.sound);
-				}}
+				source={{ uri: item.img }}
 			/>
-			<Button title={item.name} />
-		</>
+			<Text>{item.name}</Text>
+		</TouchableOpacity>
 	);
 }
