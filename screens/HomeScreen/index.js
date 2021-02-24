@@ -7,20 +7,28 @@ import { styles } from "./styles";
 import starterKit from "../../api/starter-kit.json";
 import { downloadStarter } from "../../api/download";
 
-export default function Home() {
+export default function Home({ route, navigation }) {
 	const [items, setItems] = useState([]);
+	// добавляем итем со скрина addnew
+	useEffect(() => {
+		if (route.params?.item) {
+			setItems([...items, route.params?.item]);
+		}
+	}, [route.params?.item]);
 	// проверяем есть ли запись о первом запуске в сторедж
 	// загружаем список
 	useEffect(() => {
 		const getFirstStorage = async () => {
 			try {
-				//await AsyncStorage.removeItem("first_start");
-				//await AsyncStorage.removeItem("items");
+				// for develop
+				await AsyncStorage.removeItem("first_start");
+				await AsyncStorage.removeItem("items");
+
 				await AsyncStorage.getItem("first_start");
 				const firstStart = await AsyncStorage.getItem("first_start");
 				if (firstStart === null) {
 					// загрузка с сервера
-					console.log("загрузка с сервера:", "загрузка с сервера");
+					console.log("загрузка с сервера");
 					await AsyncStorage.setItem("first_start", "true");
 					const cachList = await downloadStarter(starterKit);
 					const starterKitCatched = starterKit.map((item, i) => ({
@@ -34,7 +42,7 @@ export default function Home() {
 					return;
 				}
 				// загрузка из кеша
-				console.log("загрузка из кеша:", "загрузка из кеша");
+				console.log("загрузка из кеша");
 				const storageItems = await AsyncStorage.getItem("items");
 				setItems(JSON.parse(storageItems));
 			} catch (error) {

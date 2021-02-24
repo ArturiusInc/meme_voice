@@ -1,26 +1,32 @@
 [
 	{
-		"sound": "http://6021ec3c9dc8.ngrok.io/1.mp3",
-		"img": "http://6021ec3c9dc8.ngrok.io/1.webp",
+		"sound": "1.mp3",
+		"img": "1.webp",
 		"name": "Прыжок Веры",
 		"link": "https://www.youtube.com/watch?v=0-ypwLJLABs"
 	},
 	{
-		"sound": "http://6021ec3c9dc8.ngrok.io/2.mp3",
-		"img": "http://6021ec3c9dc8.ngrok.io/2.webp",
+		"sound": "2.mp3",
+		"img": "2.webp",
 		"name": "Щас зарежу нахуй",
 		"link": "https://www.youtube.com/watch?v=snKTmNIOdXs"
 	},
 	{
-		"sound": "http://6021ec3c9dc8.ngrok.io/3.mp3",
-		"img": "http://6021ec3c9dc8.ngrok.io/3.webp",
+		"sound": "3.mp3",
+		"img": "3.webp",
 		"name": "Ты втираешь мне какую-то дичь",
 		"link": "https://www.youtube.com/watch?v=TVwvcGajoQg"
 	},
 	{
-		"sound": "http://6021ec3c9dc8.ngrok.io/4.mp3",
-		"img": "http://6021ec3c9dc8.ngrok.io/4.webp",
+		"sound": "4.mp3",
+		"img": "4.webp",
 		"name": "Бать, тебе нормально?",
 		"link": "https://www.youtube.com/watch?v=duvlWEJJmU0"
+	},
+	{
+		"sound": "5.mp3",
+		"img": "5.webp",
+		"name": "Мы не знаем что это такое",
+		"link": "https://www.youtube.com/watch?v=X9VVzalSkjE"
 	}
 ]
