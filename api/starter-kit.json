@@ -28,5 +28,11 @@
 		"img": "5.webp",
 		"name": "Мы не знаем что это такое",
 		"link": "https://www.youtube.com/watch?v=X9VVzalSkjE"
+	},
+	{
+		"sound": "6.mp3",
+		"img": "6.webp",
+		"name": "Пацаны вообще ребята",
+		"link": "https://www.youtube.com/watch?v=cJdjX9sksaI"
 	}
 ]
