@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import styles from "./styles";
 import VoiceItem from "../voiceitem";
 import { Audio } from "expo-av";
@@ -16,10 +16,12 @@ export default function VoiceList({ items }) {
 		}
 	}
 	return (
-		<View style={styles.voicelist}>
-			{items.map((item, i) => (
-				<VoiceItem item={item} sound={sound} playsound={playSound} key={i} />
-			))}
-		</View>
+		<ScrollView style={{ width: "100%" }}>
+			<View style={styles.voicelist}>
+				{items.map((item, i) => (
+					<VoiceItem item={item} sound={sound} playsound={playSound} key={i} />
+				))}
+			</View>
+		</ScrollView>
 	);
 }

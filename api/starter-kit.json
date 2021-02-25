@@ -40,5 +40,29 @@
 		"img": "7.webp",
 		"name": "Пацан к успеху шел, не получилось, не фартануло",
 		"link": "https://www.youtube.com/watch?v=3YUNQoPrJGk"
+	},
+	{
+		"sound": "8.mp3",
+		"img": "8.webp",
+		"name": "Вы кто такие",
+		"link": "https://www.youtube.com/watch?v=RxxTQRGv4V8"
+	},
+	{
+		"sound": "9.mp3",
+		"img": "9.webp",
+		"name": "Полномочия",
+		"link": "https://www.youtube.com/watch?v=gKpk4-tAzs4"
+	},
+	{
+		"sound": "10.mp3",
+		"img": "10.webp",
+		"name": "Испугались? Обосрался!",
+		"link": "https://www.youtube.com/watch?v=ypBKycLLvPY"
+	},
+	{
+		"sound": "11.mp3",
+		"img": "11.webp",
+		"name": "а я думала сова",
+		"link": "https://www.youtube.com/watch?v=AFC-3PH79gQ"
 	}
 ]

@@ -21,8 +21,8 @@ export default function Home({ route, navigation }) {
 		const getFirstStorage = async () => {
 			try {
 				// for develop
-				await AsyncStorage.removeItem("first_start");
-				await AsyncStorage.removeItem("items");
+				//await AsyncStorage.removeItem("first_start");
+				//await AsyncStorage.removeItem("items");
 
 				await AsyncStorage.getItem("first_start");
 				const firstStart = await AsyncStorage.getItem("first_start");
