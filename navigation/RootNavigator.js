@@ -12,6 +12,9 @@ const Stack = createStackNavigator({
 				<Icon name={"menu"} size={28} color={"white"} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
 		),
+		navigationOptions: {
+			tabBarVisible: false,
+		},
 	}),
 });
 /*
@@ -37,15 +40,18 @@ export function RootNavigator() {
 			<Stack.Screen
 				name="Home"
 				component={DrawerNavigator}
-				// options={(props) => {
-				// 	return {
-				// 		headerRight: () => (
-				// 			<TouchableOpacity style={styles.menuButton} onPress={() => props.navigation.openDrawer()}>
-				// 				<FontAwesome5 name="bars" size={24} color="#fff" />
-				// 			</TouchableOpacity>
-				// 		),
-				// 	};
-				// }}
+				options={(props) => {
+					return {
+						navigationOptions: {
+							tabBarVisible: false,
+						},
+						// headerRight: () => (
+						// 	<TouchableOpacity style={styles.menuButton} onPress={() => props.navigation.openDrawer()}>
+						// 		<FontAwesome5 name="bars" size={24} color="#fff" />
+						// 	</TouchableOpacity>
+						// ),
+					};
+				}}
 			/>
 			<Stack.Screen name="Add new" component={AddNewScreen} />
 		</Stack.Navigator>

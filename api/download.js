@@ -2,7 +2,7 @@ import * as FileSystem from "expo-file-system";
 import shorthash from "shorthash";
 
 export const downloadStarter = async (starterKit) => {
-	const serverRoot = "http://93dd2b50dd85.ngrok.io";
+	const serverRoot = "http://cbed99eea84a.ngrok.io";
 
 	const download = async (uri) => {
 		const name = shorthash.unique(uri);

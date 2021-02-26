@@ -17,7 +17,12 @@ export default function VoiceItem({ item, sound, playsound }) {
 				playsound(item.sound);
 			}}
 		>
-			<ImageBackground style={styles.image} source={{ uri: item.img }} resizeMethod={"auto"} />
+			<ImageBackground
+				style={styles.image}
+				imageStyle={{ borderRadius: 7 }}
+				source={{ uri: item.img }}
+				resizeMethod={"auto"}
+			/>
 			<Text style={styles.text}>{item.name}</Text>
 		</TouchableOpacity>
 	);

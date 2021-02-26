@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { Button, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import HomeScreen from "./screens/HomeScreen";
@@ -33,21 +33,23 @@ const customHeaderElements = (nav) => ({
 const StackNavigatorHome = ({ navigation }) => (
 	<Stack.Navigator screenOptions={screensHeaderOprions}>
 		<Stack.Screen name="Home" component={HomeScreen} options={customHeaderElements(navigation)} />
-		<Stack.Screen name="Addnew" component={AddNewScreen} options={customHeaderElements(navigation)} />
+		<Stack.Screen name="Add new" component={AddNewScreen} options={customHeaderElements(navigation)} />
 	</Stack.Navigator>
 );
 
 const StackNavigatorAdd = ({ navigation }) => (
 	<Stack.Navigator initialRouteName="AddNewScreen" screenOptions={screensHeaderOprions}>
-		<Stack.Screen name="Addnew" component={AddNewScreen} options={customHeaderElements(navigation)} />
-		{/* <Stack.Screen name="Home" component={HomeScreen} options={customHeaderElements(navigation)} /> */}
+		<Stack.Screen name="Add new" component={AddNewScreen} options={customHeaderElements(navigation)} />
 	</Stack.Navigator>
 );
 
 export default function App(props) {
 	return (
 		<NavigationContainer>
-			<Drawer.Navigator initialRouteName="HomeScreen" /*drawerContent={(props) => <DrawerContent {...props} />}*/>
+			<Drawer.Navigator
+				initialRouteName="HomeScreen"
+				/*drawerContent={(props) => <DrawerContent {...props} />}*/
+			>
 				<Drawer.Screen name="Home" component={StackNavigatorHome} />
 				<Drawer.Screen name="Add new" component={StackNavigatorAdd} />
 			</Drawer.Navigator>

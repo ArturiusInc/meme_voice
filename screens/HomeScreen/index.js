@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 import VoiceList from "../../components/voicelist";
 import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -9,6 +10,7 @@ import { downloadStarter } from "../../api/download";
 
 export default function Home({ route, navigation }) {
 	const [items, setItems] = useState([]);
+	const [spinner, setSpinner] = useState(true);
 	// добавляем итем со скрина addnew
 	useEffect(() => {
 		if (route.params?.item) {
@@ -24,12 +26,10 @@ export default function Home({ route, navigation }) {
 				//await AsyncStorage.removeItem("first_start");
 				//await AsyncStorage.removeItem("items");
 
-				await AsyncStorage.getItem("first_start");
 				const firstStart = await AsyncStorage.getItem("first_start");
 				if (firstStart === null) {
 					// загрузка с сервера
 					console.log("загрузка с сервера");
-					await AsyncStorage.setItem("first_start", "true");
 					const cachList = await downloadStarter(starterKit);
 					const starterKitCatched = starterKit.map((item, i) => ({
 						sound: cachList[i].sound,
@@ -37,14 +37,17 @@ export default function Home({ route, navigation }) {
 						name: item.name,
 						link: item.link,
 					}));
+					await AsyncStorage.setItem("first_start", "true");
 					await AsyncStorage.setItem("items", JSON.stringify(starterKitCatched));
 					setItems(starterKitCatched);
+					setSpinner(false);
 					return;
 				}
 				// загрузка из кеша
 				console.log("загрузка из кеша");
 				const storageItems = await AsyncStorage.getItem("items");
 				setItems(JSON.parse(storageItems));
+				setSpinner(false);
 			} catch (error) {
 				console.log("error:", error);
 			}
@@ -54,7 +57,7 @@ export default function Home({ route, navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<VoiceList items={items} />
+			{spinner ? <ActivityIndicator size="large" color="#00ff00" /> : <VoiceList items={items} />}
 			<StatusBar style="auto" />
 		</View>
 	);
