@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator } from "react-native";
-import VoiceList from "../../components/voicelist";
-import { View } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./styles";
 import starterKit from "../../api/starter-kit.json";
+import VoiceList from "../../components/voicelist";
 import { downloadStarter } from "../../api/download";
 
 export default function Home({ route, navigation }) {
