@@ -36,7 +36,7 @@ const customHeaderElements = (navigation) => ({
 
 const StackNavigatorHome = ({ navigation }) => (
 	<Stack.Navigator screenOptions={screensHeaderOprions}>
-		<Stack.Screen name="Home" component={HomeScreen} options={customHeaderElements(navigation)} />
+		<Stack.Screen name="Meme voice" component={HomeScreen} options={customHeaderElements(navigation)} />
 		<Stack.Screen name="Add new" component={AddNewScreen} options={customHeaderElements(navigation)} />
 	</Stack.Navigator>
 );
@@ -51,7 +51,7 @@ export default function App(props) {
 	return (
 		<NavigationContainer>
 			<Drawer.Navigator initialRouteName="HomeScreen" /* drawerContent={(props) => <DrawerContent {...props} />}*/>
-				<Drawer.Screen name="Home" component={StackNavigatorHome} />
+				<Drawer.Screen name="Meme voice" component={StackNavigatorHome} />
 				<Drawer.Screen name="Add new" component={StackNavigatorAdd} />
 			</Drawer.Navigator>
 		</NavigationContainer>

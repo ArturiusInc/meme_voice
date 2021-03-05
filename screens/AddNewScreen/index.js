@@ -36,8 +36,8 @@ export default function AddNew({ navigation }) {
 			};
 			newData.push(memObject);
 			newData = JSON.stringify(memObject);
-			await AsyncStorage.setItem("items", newData);
-			navigation.navigate("Home", { screen: "Home", params: { item: memObject } });
+			await AsyncStorage.setItem("@items", newData);
+			navigation.navigate("Meme voice", { screen: "Home", params: { item: memObject } });
 		} catch (e) {
 			console.log("e1:", e);
 		}
@@ -45,7 +45,7 @@ export default function AddNew({ navigation }) {
 
 	const getDataStorage = async () => {
 		try {
-			const jsonValue = await AsyncStorage.getItem("items");
+			const jsonValue = await AsyncStorage.getItem("@items");
 			if (jsonValue != null) {
 				addDataStorage(jsonValue);
 			} else {

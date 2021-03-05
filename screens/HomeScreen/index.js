@@ -25,7 +25,7 @@ export default function Home({ route, navigation }) {
 				//await AsyncStorage.removeItem("first_start");
 				//await AsyncStorage.removeItem("items");
 
-				const firstStart = await AsyncStorage.getItem("first_start");
+				const firstStart = await AsyncStorage.getItem("@first_start");
 				if (firstStart === null) {
 					// загрузка с сервера
 					console.log("загрузка с сервера");
@@ -36,15 +36,15 @@ export default function Home({ route, navigation }) {
 						name: item.name,
 						link: item.link,
 					}));
-					await AsyncStorage.setItem("first_start", "true");
-					await AsyncStorage.setItem("items", JSON.stringify(starterKitCatched));
+					await AsyncStorage.setItem("@first_start", "true");
+					await AsyncStorage.setItem("@items", JSON.stringify(starterKitCatched));
 					setItems(starterKitCatched);
 					setSpinner(false);
 					return;
 				}
 				// загрузка из кеша
 				console.log("загрузка из кеша");
-				const storageItems = await AsyncStorage.getItem("items");
+				const storageItems = await AsyncStorage.getItem("@items");
 				setItems(JSON.parse(storageItems));
 				setSpinner(false);
 			} catch (error) {
