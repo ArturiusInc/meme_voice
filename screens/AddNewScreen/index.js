@@ -1,88 +1,89 @@
-import React, { useState } from "react";
-import { View, Text, Button, TextInput, Image } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import * as DocumentPicker from "expo-document-picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import styles from "./styles";
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, Image } from 'react-native';
+import * as DocumentPicker from 'expo-document-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './styles';
 
 export default function AddNew({ navigation }) {
-	const [file, setFile] = useState(null);
-	const [fileImg, setFileImg] = useState(null);
-	const [memeName, setMemeName] = useState("");
-	const [linkOriginal, setLinkOriginal] = useState("");
+  const Types = {
+    audio: 'audio/*',
+    image: 'image/*',
+  };
+  const [sound, setSound] = useState(null);
+  const [img, setImg] = useState(null);
+  const [memeName, setMemeName] = useState('');
+  const [linkOriginal, setLinkOriginal] = useState('');
 
-	const pickAudio = async () => {
-		let result = await DocumentPicker.getDocumentAsync({ type: "audio/*" });
-		if (result.type === "success") {
-			setFile(result);
-		}
-	};
+  const pickFile = async (type) => {
+    try {
+      let result = await DocumentPicker.getDocumentAsync({ type: type });
+      if (result.type === 'success') {
+        if (type === Types.audio) {
+          setSound(result.uri);
+        } else {
+          setImg(result.uri);
+        }
+      }
+    } catch (error) {
+      console.log('AddNew pickFile: ', JSON.stringify(error));
+    }
+  };
 
-	const pickImg = async () => {
-		let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
-		if (result.type === "success") {
-			setFileImg(result);
-		}
-	};
+  const addDataStorage = async (storeData) => {
+    try {
+      let newData = storeData;
+      const memObject = { sound, img, name: memeName, link: linkOriginal };
+      newData.push(memObject);
+      await AsyncStorage.setItem('@items', JSON.stringify(newData));
+      navigation.navigate('Meme voice');
+    } catch (error) {
+      console.log('AddNew addDataStorage', error);
+    }
+  };
 
-	const addDataStorage = async (storeData) => {
-		try {
-			let newData = JSON.parse(storeData);
-			const memObject = {
-				sound: file.uri,
-				img: fileImg.uri,
-				name: memeName,
-				link: linkOriginal,
-			};
-			newData.push(memObject);
-			newData = JSON.stringify(memObject);
-			await AsyncStorage.setItem("@items", newData);
-			navigation.navigate("Meme voice", { screen: "Home", params: { item: memObject } });
-		} catch (e) {
-			console.log("e1:", e);
-		}
-	};
+  const getDataStorage = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@items');
+      if (jsonValue != null) {
+        const arrjson = JSON.parse(jsonValue);
+        addDataStorage([...arrjson]);
+      } else {
+        addDataStorage([]);
+      }
+    } catch (e) {
+      console.log('e2:', e);
+    }
+  };
 
-	const getDataStorage = async () => {
-		try {
-			const jsonValue = await AsyncStorage.getItem("@items");
-			if (jsonValue != null) {
-				addDataStorage(jsonValue);
-			} else {
-				const nullData = "[]";
-				addDataStorage(nullData);
-			}
-		} catch (e) {
-			console.log("e2:", e);
-			// error reading value
-		}
-	};
-
-	return (
-		<View style={styles.container}>
-			<View style={styles.file}>
-				<Button onPress={pickAudio} title="Выбрать медаи файл" />
-				<Text style={styles.selectfiletext}>{file ? file.name : "не выбрано"}</Text>
-			</View>
-			<View style={styles.file}>
-				<Button onPress={pickImg} title="Выбрать иконку" />
-				{fileImg ? <Image source={{ uri: fileImg.uri }} style={styles.icon} /> : null}
-				<Text style={styles.selectfiletext}>{fileImg ? fileImg.name : "не выбрано"}</Text>
-			</View>
-			<TextInput
-				style={styles.memename}
-				value={memeName}
-				onChangeText={(text) => setMemeName(text)}
-				placeholder="Название мема"
-			/>
-			<TextInput
-				style={styles.memename}
-				value={linkOriginal}
-				onChangeText={(text) => setLinkOriginal(text)}
-				placeholder="Ссылка на оригинал"
-			/>
-			<Button onPress={getDataStorage} title="Сохранить" />
-			<StatusBar style="auto" />
-		</View>
-	);
+  return (
+    <View style={styles.container}>
+      <View style={styles.file}>
+        <Button
+          onPress={() => pickFile(Types.audio)}
+          title="Выбрать медаи файл"
+        />
+        <Text style={styles.selectfiletext}>
+          {sound ? sound : 'не выбрано'}
+        </Text>
+      </View>
+      <View style={styles.file}>
+        <Button onPress={() => pickFile(Types.image)} title="Выбрать иконку" />
+        {img ? <Image source={{ uri: img }} style={styles.icon} /> : null}
+        <Text style={styles.selectfiletext}>{img ? img : 'не выбрано'}</Text>
+      </View>
+      <TextInput
+        style={styles.memename}
+        value={memeName}
+        onChangeText={(text) => setMemeName(text)}
+        placeholder="Название мема"
+      />
+      <TextInput
+        style={styles.memename}
+        value={linkOriginal}
+        onChangeText={(text) => setLinkOriginal(text)}
+        placeholder="Ссылка на оригинал"
+      />
+      <Button onPress={getDataStorage} title="Сохранить" />
+    </View>
+  );
 }
