@@ -8,7 +8,8 @@
     "start": "react-native start --reset-cache",
     "info": "react-native info",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "release": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
