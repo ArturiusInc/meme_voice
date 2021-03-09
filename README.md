@@ -3,7 +3,7 @@
 ## Feature
 
 - [ ] first release
-- [ ] reduce size apk (current 19.6 Mb)
+- [x] reduce size apk (from 19.6 Mb to 7.1-7.8Mb)
 - [x] migrate to react native
 - [ ] app info page
 - [ ] app setting page
